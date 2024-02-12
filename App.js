@@ -71,7 +71,9 @@ export default function App() {
     dbdat();
   }, []);
   return (
-    <View style={{ flex: 1, backgroundColor: "black" }}>
+    <View
+      style={{ flex: 1, backgroundColor: theme === "dark" ? "black" : "white" }}
+    >
       <SafeAreaView
         style={{
           flex: 1,
@@ -81,18 +83,35 @@ export default function App() {
         <NavigationContainer
           theme={theme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <View style={[styles.searchbar, styles.bg]}>
-            <Feather name="search" size={24} color="white" />
+          <View
+            style={[
+              styles.searchbar,
+              { backgroundColor: theme === "dark" ? "black" : "white" },
+            ]}
+          >
+            <Feather
+              name="search"
+              size={24}
+              color={theme === "dark" ? "white" : "black"}
+            />
             <TextInput
-              style={[{ flex: 1 }, styles.searchtext]}
+              style={[
+                { flex: 1, color: theme === "dark" ? "white" : "black" },
+                styles.searchtext,
+              ]}
               placeholder="Search"
-              placeholderTextColor="white"
+              placeholderTextColor={theme === "dark" ? "white" : "black"}
               value={test}
               onChange={settest}
               onSubmitEditing={handleenter}
             />
           </View>
-          <Tab.Navigator>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarLabelStyle: { fontSize: 12 },
+            })}
+          >
+            <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Appetizers" component={Appetizers} />
             <Tab.Screen name="Salads" component={Appetizers} />
             <Tab.Screen name="Beverages" component={Appetizers} />
@@ -112,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   searchtext: { color: "white" },
-  bg: { backgroundColor: "#000" },
+
   searchbar: {
     display: "flex",
     gap: 20,
